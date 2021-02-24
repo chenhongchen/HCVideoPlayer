@@ -1,0 +1,80 @@
+PODS:
+  - FLAnimatedImage (1.0.12)
+  - google-cast-sdk (4.4.8):
+    - google-cast-sdk/Core (= 4.4.8)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.0)
+  - google-cast-sdk/Core (4.4.8):
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.0)
+  - GTMSessionFetcher/Core (1.5.0)
+  - HCVideoPlayer (0.0.1):
+    - FLAnimatedImage
+    - google-cast-sdk (~> 4.4.6)
+    - HCVideoPlayer/no-arc (= 0.0.1)
+    - HCVideoPlayerTools (= 0.0.4)
+    - MJExtension
+    - Peer5Kit (= 1.3.6)
+    - Reachability
+    - SDWebImage
+    - smart-view-sdk (= 2.5.8)
+    - XCDYouTubeKit (= 2.8.2)
+  - HCVideoPlayer/no-arc (0.0.1):
+    - FLAnimatedImage
+    - google-cast-sdk (~> 4.4.6)
+    - HCVideoPlayerTools (= 0.0.4)
+    - MJExtension
+    - Peer5Kit (= 1.3.6)
+    - Reachability
+    - SDWebImage
+    - smart-view-sdk (= 2.5.8)
+    - XCDYouTubeKit (= 2.8.2)
+  - HCVideoPlayerTools (0.0.4)
+  - MJExtension (3.2.4)
+  - Peer5Kit (1.3.6)
+  - Protobuf (3.14.0)
+  - Reachability (3.2)
+  - SDWebImage (5.10.2):
+    - SDWebImage/Core (= 5.10.2)
+  - SDWebImage/Core (5.10.2)
+  - smart-view-sdk (2.5.8)
+  - XCDYouTubeKit (2.8.2)
+
+DEPENDENCIES:
+  - HCVideoPlayer (from `./`)
+
+SPEC REPOS:
+  trunk:
+    - FLAnimatedImage
+    - google-cast-sdk
+    - GTMSessionFetcher
+    - HCVideoPlayerTools
+    - MJExtension
+    - Peer5Kit
+    - Protobuf
+    - Reachability
+    - SDWebImage
+    - smart-view-sdk
+    - XCDYouTubeKit
+
+EXTERNAL SOURCES:
+  HCVideoPlayer:
+    :path: "./"
+
+SPEC CHECKSUMS:
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  google-cast-sdk: 2feec01ef5ee467f70a14acde9f01f188aeea76f
+  GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  HCVideoPlayer: 2264cedd93bbfe92f9fcc243a723f2a9d0f99ab9
+  HCVideoPlayerTools: 9043d218b13d76909747bbec924910caf3c320e4
+  MJExtension: 88e0900751b6cac8de1cf724ca9838a0b28d5acb
+  Peer5Kit: 3ef805c94a615daae0eabca0b2fa01445f6eb7ca
+  Protobuf: 0cde852566359049847168e51bd1c690e0f70056
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
+  smart-view-sdk: 00d57e3720f261560672c57a4aed43368abc74b1
+  XCDYouTubeKit: 79baadb0560673a67c771eba45f83e353fd12c1f
+
+PODFILE CHECKSUM: 3075ce4ab71134e43eb61200248733a68cceb273
+
+COCOAPODS: 1.10.0
