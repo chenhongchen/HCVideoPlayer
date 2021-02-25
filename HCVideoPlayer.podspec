@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "HCVideoPlayer"
-  spec.version      = "0.0.1"
+  spec.version      = "0.0.2"
   spec.summary      = "iOS播放器"
   spec.description  = "支持各种投屏、贴片等各种广告、弹幕等，功能全面"
   spec.homepage     = "https://github.com/chenhongchen/HCVideoPlayer"
@@ -19,13 +19,18 @@ Pod::Spec.new do |spec|
   spec.dependency 'Reachability'
   spec.dependency 'Peer5Kit', '1.3.6'
   spec.dependency 'google-cast-sdk', '~> 4.4.6'
-  spec.dependency 'smart-view-sdk', '2.5.8'
+  # spec.dependency 'smart-view-sdk', '2.5.8'
   spec.dependency 'XCDYouTubeKit', '2.8.2'
   spec.dependency 'HCVideoPlayerTools', '0.0.4'
+  spec.dependency 'CocoaAsyncSocket'
 
   #引入xml2
-  spec.libraries = 'xml2'
-  spec.xcconfig = {'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2'}
+  spec.libraries = 'icucore', 'c++', 'z', 'xml2'
+  spec.xcconfig = {
+    'ENABLE_BITCODE' => 'NO',
+    'HEADER_SEARCH_PATHS' => '${SDKROOT}/usr/include/libxml2',
+    'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES'
+  }
   spec.requires_arc = true
       non_arc_files = 'HCVideoPlayer/Lib/CLUPnP/GData/*.{h,m}'
   spec.exclude_files = non_arc_files

@@ -11,12 +11,12 @@
 #import "HCTVControllView.h"
 #import "HCProgressView.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import <SmartView/SmartView.h>
+//#import <SmartView/SmartView.h> // 注释三星
 #import "HCVideoPlayerConst.h"
 
-@interface HCTVControllView ()<HCProgressViewDelegate, ConnectionDelegate, VideoPlayerDelegate>
+@interface HCTVControllView ()<HCProgressViewDelegate/*注释三星*, ConnectionDelegate, VideoPlayerDelegate*/>
 @property (nonatomic, strong) CLUPnPRenderer *render; // dlna
-@property (nonatomic, strong) VideoPlayer *samsungPlayer; // samsung
+//@property (nonatomic, strong) VideoPlayer *samsungPlayer; // samsung// 注释三星
 
 @property (nonatomic, weak) UIButton *backBtn;
 @property (nonatomic, weak) UIImageView *topTvImageView;
@@ -260,17 +260,18 @@
         });
         
         //
-        [_samsungPlayer stop];
-        _samsungPlayer = nil;
+        // 注释三星
+//        [_samsungPlayer stop];
+//        _samsungPlayer = nil;
     }
     else if (_style == HCTVControllViewStyleSamsung) {
         
         self.progressView.playProgress = 0;
-        
-        _samsungPlayer = [deviceItem.samsungDev createVideoPlayer:@"DefaultMediaPlayer2.0.2"];
-        _samsungPlayer.connectionDelegate = self;
-        _samsungPlayer.playerDelegate = self;
-        [_samsungPlayer playContent:[NSURL URLWithString:_deviceItem.videoUrl] title:@"" thumbnailURL:nil completionHandler:nil];
+        // 注释三星
+//        _samsungPlayer = [deviceItem.samsungDev createVideoPlayer:@"DefaultMediaPlayer2.0.2"];
+//        _samsungPlayer.connectionDelegate = self;
+//        _samsungPlayer.playerDelegate = self;
+//        [_samsungPlayer playContent:[NSURL URLWithString:_deviceItem.videoUrl] title:@"" thumbnailURL:nil completionHandler:nil];
         
         //
         [_render stop];
@@ -638,8 +639,9 @@
     
     [_render stop];
     self.render = nil;
-    [self.samsungPlayer stop];
-    self.samsungPlayer = nil;
+    // 注释三星
+//    [self.samsungPlayer stop];
+//    self.samsungPlayer = nil;
 }
 
 - (void)setupTimeLabelFrame
@@ -664,7 +666,7 @@
         [_render play];
     }
     else if (_style == HCTVControllViewStyleSamsung) {
-        [_samsungPlayer play];
+//        [_samsungPlayer play];// 注释三星
     }
     else if (_style == HCTVControllViewStyleAirPlay) {
         [self.videoPlayer play];
@@ -677,7 +679,7 @@
         [_render pause];
     }
     else if (_style == HCTVControllViewStyleSamsung) {
-        [_samsungPlayer pause];
+//        [_samsungPlayer pause];// 注释三星
     }
     else if (_style == HCTVControllViewStyleAirPlay) {
         [self.videoPlayer pause];
@@ -690,7 +692,7 @@
         [_render seek:time];
     }
     else if (_style == HCTVControllViewStyleSamsung) {
-        [_samsungPlayer seek:time];
+//        [_samsungPlayer seek:time];// 注释三星
     }
     else if (_style == HCTVControllViewStyleAirPlay) { // AirPlay投屏
         if (self.videoPlayer.url)
@@ -701,7 +703,8 @@
 - (void)removeAllDelegate
 {
     _render.delegate = nil;
-    _samsungPlayer.connectionDelegate = nil;
-    _samsungPlayer.playerDelegate = nil;
+    // 注释三星
+//    _samsungPlayer.connectionDelegate = nil;
+//    _samsungPlayer.playerDelegate = nil;
 }
 @end
