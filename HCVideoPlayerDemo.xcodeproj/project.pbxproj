@@ -185,8 +185,8 @@
 				EA1DC53525E4F9E700D29B1B /* Sources */,
 				EA1DC53625E4F9E700D29B1B /* Frameworks */,
 				EA1DC53725E4F9E700D29B1B /* Resources */,
-				35EC67C37F979CD835953CE3 /* [CP] Embed Pods Frameworks */,
 				827F1CF3ECB7D3DEE961F7AE /* [CP] Copy Pods Resources */,
+				F2767226656CE612E4BB4CC5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -224,8 +224,8 @@
 				EA1DC55B25E4F9EA00D29B1B /* Sources */,
 				EA1DC55C25E4F9EA00D29B1B /* Frameworks */,
 				EA1DC55D25E4F9EA00D29B1B /* Resources */,
-				31909F7ABEBE2B1F9BE327BF /* [CP] Embed Pods Frameworks */,
 				3BD02AD7AD9FB3B02DBAEFA8 /* [CP] Copy Pods Resources */,
+				DF245B8B1546B689A28E5040 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -305,40 +305,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		31909F7ABEBE2B1F9BE327BF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		35EC67C37F979CD835953CE3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo/Pods-HCVideoPlayerDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo/Pods-HCVideoPlayerDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo/Pods-HCVideoPlayerDemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3BD02AD7AD9FB3B02DBAEFA8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -417,6 +383,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DF245B8B1546B689A28E5040 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests/Pods-HCVideoPlayerDemo-HCVideoPlayerDemoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F204FA8E7FD698C079D41BB4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -437,6 +420,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F2767226656CE612E4BB4CC5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo/Pods-HCVideoPlayerDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo/Pods-HCVideoPlayerDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HCVideoPlayerDemo/Pods-HCVideoPlayerDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
