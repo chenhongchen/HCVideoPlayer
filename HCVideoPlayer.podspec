@@ -19,7 +19,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'Reachability'
   spec.dependency 'Peer5Kit', '1.3.6'
   spec.dependency 'google-cast-sdk', '~> 4.4.6'
-  # spec.dependency 'smart-view-sdk', '2.5.8'
+  spec.dependency 'smart-view-sdk', '2.5.8'
   spec.dependency 'XCDYouTubeKit', '2.8.2'
   spec.dependency 'HCVideoPlayerTools', '0.0.4'
   spec.dependency 'CocoaAsyncSocket'

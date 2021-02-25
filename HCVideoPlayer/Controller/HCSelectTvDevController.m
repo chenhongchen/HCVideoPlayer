@@ -9,16 +9,16 @@
 #import "HCSelectTvDevController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "HCGoogleCastTool.h"
-//#import <SmartView/SmartView.h>// 注释三星
+#import <SmartView/SmartView.h>
 #import "HCVediosCastManualController.h"
 
-@interface HCSelectTvDevController () <CLUPnPServerDelegate, UITableViewDataSource, UITableViewDelegate/*注释三星*,ServiceSearchDelegate*/>
+@interface HCSelectTvDevController () <CLUPnPServerDelegate, UITableViewDataSource, UITableViewDelegate, ServiceSearchDelegate>
 /// Dlna
 @property (nonatomic, strong) CLUPnPServer *upd;
 @property (nonatomic, strong) NSArray <CLUPnPDevice *> *dlnaDevs;
 /// Samsung
-//@property (nonatomic, strong) ServiceSearch *ss;// 注释三星
-//@property (nonatomic, strong) NSArray <Service *> *samsungDevs;// 注释三星
+@property (nonatomic, strong) ServiceSearch *ss;
+@property (nonatomic, strong) NSArray <Service *> *samsungDevs;
 
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIImageView *imageView;
@@ -36,15 +36,15 @@
     }
     return _upd;
 }
-// 注释三星
-//- (ServiceSearch *)ss
-//{
-//    if (_ss == nil) {
-//        _ss = [Service search];
-//        _ss.delegate = self;
-//    }
-//    return _ss;
-//}
+
+- (ServiceSearch *)ss
+{
+    if (_ss == nil) {
+        _ss = [Service search];
+        _ss.delegate = self;
+    }
+    return _ss;
+}
 
 - (UITableView *)tableView
 {
@@ -149,7 +149,7 @@
     // searchingView
     UIView *searchingView = [[UIView alloc] init];
     searchingView.backgroundColor = [UIColor whiteColor];
-    CGFloat searchViewHeight = (self.dlnaDevs.count /*注释三星*+ self.samsungDevs.count*/) ? 0 : 48;
+    CGFloat searchViewHeight = (self.dlnaDevs.count + self.samsungDevs.count) ? 0 : 48;
     searchingView.frame = CGRectMake(0, 0, kVP_ScreenWidth, searchViewHeight);
     searchingView.clipsToBounds = YES;
     [tableFooterView addSubview:searchingView];
@@ -250,13 +250,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // 注释三星
-//    if (section == 0) {
-//        return _samsungDevs.count;
-//    }
-//    else {
+    if (section == 0) {
+        return _samsungDevs.count;
+    }
+    else {
         return _dlnaDevs.count;
-//    }
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -274,15 +273,14 @@
         [cell.contentView addSubview:hLine];
     }
     
-    // 注释三星
-//    if (indexPath.section == 0) {
-//        Service *samsungDev = self.samsungDevs[indexPath.row];
-//        cell.textLabel.text = samsungDev.name;
-//    }
-//    else {
+    if (indexPath.section == 0) {
+        Service *samsungDev = self.samsungDevs[indexPath.row];
+        cell.textLabel.text = samsungDev.name;
+    }
+    else {
         CLUPnPDevice *dlnaDev = self.dlnaDevs[indexPath.row];
         cell.textLabel.text = dlnaDev.friendlyName;
-//    }
+    }
     return cell;
 }
 
@@ -293,19 +291,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 注释三星
-//    if (indexPath.section == 0) {
-//        Service *samsungDev = self.samsungDevs[indexPath.row];
-//        if ([self.delegate respondsToSelector:@selector(selectTvDevController:didSelectSamsungDev:)]) {
-//            [self.delegate selectTvDevController:self didSelectSamsungDev:samsungDev];
-//        }
-//    }
-//    else {
+    
+    if (indexPath.section == 0) {
+        Service *samsungDev = self.samsungDevs[indexPath.row];
+        if ([self.delegate respondsToSelector:@selector(selectTvDevController:didSelectSamsungDev:)]) {
+            [self.delegate selectTvDevController:self didSelectSamsungDev:samsungDev];
+        }
+    }
+    else {
         CLUPnPDevice *device = self.dlnaDevs[indexPath.row];
         if ([self.delegate respondsToSelector:@selector(selectTvDevController:didSelectDlnaDev:)]) {
             [self.delegate selectTvDevController:self didSelectDlnaDev:device];
         }
-//    }
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -327,55 +325,54 @@
 
 
 #pragma mark - ServiceSearchDelegate
-// 注释三星
-//- (void)onServiceFound:(Service * __nonnull)service
-//{
-//    _samsungDevs = [_ss getServices];
-//    // 去重：主要是dlna中包含三星设备，要去掉
-//    [self duplicateDevsRemoval];
-//    [self.tableView reloadData];
-//    [self setupTableFooterView];
-//}
-//
-///// The ServiceSearch will call this delegate method when a service is lost
-/////
-///// \param service The lost service
-//- (void)onServiceLost:(Service * __nonnull)service
-//{
-//    _samsungDevs = [_ss getServices];
-//    [self.tableView reloadData];
-//}
-//
-///// If BLE device is found
-//- (void)onFoundOnlyBLE:(NSString * _Nonnull)NameOfTV
-//{
-//}
-//
-///// Find other network (other than BLE)
-//- (void)onFoundOtherNetwork:(NSString * _Nonnull)NameOfTV
-//{
-//}
-//
-///// The ServiceSearch will call this delegate method after stopping the search
-//- (void)onStop
-//{
-//}
-//
-///// The ServiceSearch will call this delegate method after the search has started
-//- (void)onStart{
-//}
+- (void)onServiceFound:(Service * __nonnull)service
+{
+    _samsungDevs = [_ss getServices];
+    // 去重：主要是dlna中包含三星设备，要去掉
+    [self duplicateDevsRemoval];
+    [self.tableView reloadData];
+    [self setupTableFooterView];
+}
+
+/// The ServiceSearch will call this delegate method when a service is lost
+///
+/// \param service The lost service
+- (void)onServiceLost:(Service * __nonnull)service
+{
+    _samsungDevs = [_ss getServices];
+    [self.tableView reloadData];
+}
+
+/// If BLE device is found
+- (void)onFoundOnlyBLE:(NSString * _Nonnull)NameOfTV
+{
+}
+
+/// Find other network (other than BLE)
+- (void)onFoundOtherNetwork:(NSString * _Nonnull)NameOfTV
+{
+}
+
+/// The ServiceSearch will call this delegate method after stopping the search
+- (void)onStop
+{
+}
+
+/// The ServiceSearch will call this delegate method after the search has started
+- (void)onStart{
+}
 
 #pragma mark - 内部方法
 - (void)startAll
 {
     [self.upd start];
-//    [self.ss start];// 注释三星
+    [self.ss start];
 }
 
 - (void)stopAll
 {
     [self.upd stop];
-//    [self.ss stop];// 注释三星
+    [self.ss stop];
 }
 
 /// 为导航栏添加google投屏和AirPlay投屏按钮
@@ -410,15 +407,14 @@
 - (void)duplicateDevsRemoval
 {
     NSMutableArray *dlnaDevsM = [NSMutableArray arrayWithArray:_dlnaDevs];
-    // 注释三星
-//    for (CLUPnPDevice *dlnaDev in _dlnaDevs) {
-//        for (Service *samsumDev in _samsungDevs) {
-//            if ([samsumDev.name isEqualToString:dlnaDev.friendlyName]) {
-//                [dlnaDevsM removeObject:dlnaDev];
-//                break;
-//            }
-//        }
-//    }
+    for (CLUPnPDevice *dlnaDev in _dlnaDevs) {
+        for (Service *samsumDev in _samsungDevs) {
+            if ([samsumDev.name isEqualToString:dlnaDev.friendlyName]) {
+                [dlnaDevsM removeObject:dlnaDev];
+                break;
+            }
+        }
+    }
     _dlnaDevs = dlnaDevsM;
 }
 @end
