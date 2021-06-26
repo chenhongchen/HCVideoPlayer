@@ -101,23 +101,4 @@
 - (CGPoint)vp_origin {
     return self.frame.origin;
 }
-
-+ (UIWindow *)vp_rootWindow
-{
-    if (@available(iOS 13.0, *))
-    {
-        for (UIWindowScene* windowScene in [UIApplication sharedApplication].connectedScenes) {
-            if (windowScene.activationState == UISceneActivationStateForegroundActive)
-            {
-                return windowScene.windows.firstObject;
-                break;
-            }
-        }
-    }
-    else
-    {
-        return [UIApplication sharedApplication].keyWindow;
-    }
-    return nil;
-}
 @end

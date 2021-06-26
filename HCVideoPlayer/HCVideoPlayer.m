@@ -2051,17 +2051,12 @@ HCVideoPlayer *g_airPlayVideoPlayer;
 }
 
 #pragma mark - HCOrientControllerDelegate
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willRotate
 {
     _isOnRotaion = YES;
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    _isOnRotaion = YES;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)didRotate
 {
     _isOnRotaion = NO;
 }

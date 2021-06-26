@@ -14,6 +14,7 @@
 #import "HCSmallWindow.h"
 #import "HCVideoPlayerConst.h"
 #import "HCVideoPlayer.h"
+#import "AppDelegate+VP.h"
 
 @interface HCSmallWindow ()
 @property (nonatomic, weak) UIView *contentView;

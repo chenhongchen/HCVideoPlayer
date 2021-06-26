@@ -6,7 +6,7 @@
 #define kMaxTipCount 16
 
 #import "BrightnessView.h"
-#import "UIView+VP.h"
+#import "AppDelegate+VP.h"
 
 @interface BrightnessView ()
 

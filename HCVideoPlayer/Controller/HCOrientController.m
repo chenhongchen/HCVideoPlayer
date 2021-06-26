@@ -9,6 +9,7 @@
 #import "HCOrientController.h"
 #import "HCVideoPlayerConst.h"
 #import "HCVideoPlayer.h"
+#import "AppDelegate+VP.h"
 
 @interface HCOrientController ()
 @end
@@ -86,6 +87,22 @@
 }
 
 #pragma mark -
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+        if ([self.delegate respondsToSelector:@selector(willRotate)]) {
+            [self.delegate willRotate];
+        }
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if ([self.delegate respondsToSelector:@selector(didRotate)]) {
+            [self.delegate didRotate];
+        }
+    }];
+
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     if ([self.delegate respondsToSelector:@selector(willRotateToInterfaceOrientation:duration:)]) {

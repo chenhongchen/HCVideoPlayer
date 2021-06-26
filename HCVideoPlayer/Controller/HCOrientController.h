@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @protocol HCOrientControllerDelegate <NSObject>
-/** 屏幕将要旋转 */
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
-/** 屏幕旋转中 */
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
+/** 屏幕将要开始旋转 */
+- (void)willRotate;
 /** 屏幕旋转完成 */
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
+- (void)didRotate;
+/** 屏幕将要旋转 */
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration API_DEPRECATED("Implement willRotate instead", ios(2.0, 8.0));
+/** 屏幕旋转中 */
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration API_DEPRECATED("Implement willRotate instead", ios(2.0, 8.0));
+/** 屏幕旋转完成 */
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation API_DEPRECATED("Implement didRotate instead", ios(2.0, 8.0));
 @end
 
 @interface HCOrientController : UIViewController

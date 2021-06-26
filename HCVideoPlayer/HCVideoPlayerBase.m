@@ -14,6 +14,7 @@
 #import "UIViewController+VP.h"
 #import "HCSmallWindow.h"
 #import "HCCornerAdView.h"
+#import "AppDelegate+VP.h"
 
 @interface HCCornerAdTimeRange : NSObject
 @property (nonatomic, assign) NSTimeInterval startTime;

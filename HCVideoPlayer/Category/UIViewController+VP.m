@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+VP.h"
-#import "UIView+VP.h"
+#import "AppDelegate+VP.h"
 
 @implementation UIViewController (VP)
 // 获取当前屏幕显示的控制器

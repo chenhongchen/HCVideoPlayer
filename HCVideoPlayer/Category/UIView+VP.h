@@ -18,7 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) CGFloat vp_height;
 @property (assign, nonatomic) CGSize vp_size;
 @property (assign, nonatomic) CGPoint vp_origin;
-+ (UIWindow *)vp_rootWindow;
 @end
 
 NS_ASSUME_NONNULL_END
