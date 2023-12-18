@@ -21,11 +21,8 @@
 #import "HCImageShareView.h"
 #import "HCHorButton.h"
 #import "UIView+Tap.h"
-#import "HCGoogleCastTool.h"
 #import "UIViewController+VP.h"
-#import "HCGoogleCastTool.h"
 #import "HCAirplayCastTool.h"
-#import "HCPTPTool.h"
 #import "BrightnessView.h"
 #import "HCFastForwardAndBackView.h"
 #import "HCTimingView.h"
@@ -33,7 +30,7 @@
 #import "HCProgressView.h"
 #import "HCProgressImageView.h"
 
-@interface HCVideoPlayer ()<HCProgressViewDelegate, HCOrientControllerDelegate, HCSelectTvDevControllerDelegate, HCTVControllViewDelegate, HCSharePanelDelegate, HCSelEpisodePanelDelegate, HCSelEpisodePanelDelegate, HCMorePanelDelegate, GCKSessionManagerListener, HCFastForwardAndBackViewDelegate>
+@interface HCVideoPlayer ()<HCProgressViewDelegate, HCOrientControllerDelegate, HCSelectTvDevControllerDelegate, HCTVControllViewDelegate, HCSharePanelDelegate, HCSelEpisodePanelDelegate, HCSelEpisodePanelDelegate, HCMorePanelDelegate, HCFastForwardAndBackViewDelegate>
 {
     __weak HCSharePanel *_sharePanel;
     __weak HCMorePanel *_morePanel;
@@ -1822,7 +1819,6 @@ HCVideoPlayer *g_airPlayVideoPlayer;
 
 - (void)becomeGoogleCastListener
 {
-    [HCGoogleCastTool addSessionManagerListener:self];
 }
 
 - (void)setCollectStatus:(BOOL)collectStatus
@@ -2074,21 +2070,9 @@ HCVideoPlayer *g_airPlayVideoPlayer;
     self.tvControllView.deviceItem = deviceItem;
 }
 
-- (void)selectTvDevController:(HCSelectTvDevController *)selectTvDevController didSelectSamsungDev:(id)samsungDev
-{
-    self.tvControllView.style = HCTVControllViewStyleSamsung;
-    [self showTvControllView];
-    [self.controllContentView bringSubviewToFront:self.tvControllView];
-    HCTVDeviceItem *deviceItem = [[HCTVDeviceItem alloc] init];
-    deviceItem.videoUrl = self.castUrl.absoluteString;
-    deviceItem.samsungDev = samsungDev;
-    deviceItem.seekTime = self.progressView.playTime;
-    self.tvControllView.deviceItem = deviceItem;
-}
-
 - (void)didClickBackBtnForSelectTvDevController:(HCSelectTvDevController *)selectTvDevController
 {
-    if (_tvControllView.hidden && ![HCGoogleCastTool isCastingWithUrl:_url.absoluteString]) {
+    if (_tvControllView.hidden) {
         if (self.urlPlayer.playerState == HCPlayerViewStateStop) {
             [self playWithUrl:_url];
         }
@@ -2277,28 +2261,6 @@ HCVideoPlayer *g_airPlayVideoPlayer;
         [self.progressImageView hiddenSelf];
         [self showLoading];
     }
-}
-
-# pragma mark - GCKSessionManagerListener
-- (void)sessionManager:(GCKSessionManager *)sessionManager didStartSession:(GCKSession *)session {
-    VPLog(@"MediaViewController: sessionManager didStartSession %@", session);
-    [self switchToRemotePlayback];
-}
-
-- (void)sessionManager:(GCKSessionManager *)sessionManager didResumeSession:(GCKSession *)session {
-    VPLog(@"MediaViewController: sessionManager didResumeSession %@", session);
-    //    [self switchToRemotePlayback];
-}
-
-- (void)sessionManager:(GCKSessionManager *)sessionManager didEndSession:(GCKSession *)session
-             withError:(NSError *)error {
-    VPLog(@"session ended with error: %@", error);
-    //    NSString *message = [NSString stringWithFormat:@"The Casting session has ended.\n%@", [error description]];
-    [self switchToLocalPlayback];
-}
-
-- (void)sessionManager:(GCKSessionManager *)sessionManager didFailToStartSessionWithError:(NSError *)error {
-    VPLog(@"session ended with error: %@", error);
 }
 
 #pragma mark - 事件
@@ -3169,44 +3131,16 @@ HCVideoPlayer *g_airPlayVideoPlayer;
     if (_whenAppActiveNotToPlay) {
         return;
     }
-    
-    NSURL *p2pUrl = [HCPTPTool PTPStreamURLForURL:_url];
-    BOOL isSamePTPUrl = [_urlPlayer.p2pUrl.absoluteString.lowercaseString isEqualToString:p2pUrl.absoluteString.lowercaseString];
-    
-    __weak typeof(self) weakSelf = self;
-    if (_urlPlayer.p2pUrl && !isSamePTPUrl) { // 使用p2p，但p2p url 已变的情况
-        if (self.tvControllView.hidden == NO && self.tvControllView.style == HCTVControllViewStyleAirPlay) {
-            return;
-        }
-        [self playWithUrl:_url forceReload:YES readyComplete:^(HCVideoPlayer *videoPlayer, HCVideoPlayerStatus status) {
-            if (status == HCVideoPlayerStatusReadyed) {
-                [weakSelf seekToTime:weakSelf.progressView.lastPlayTime autoPlay:NO complete:^(BOOL finished) {
-                    if (finished) {
-                        // 正在投屏或是之前是手动暂停的，暂停播放
-                        if (weakSelf.tvControllView.hidden == NO || weakSelf.isManualStopOrPausePlay) {
-                            [weakSelf pause];
-                        }
-                        else
-                        {
-                            [weakSelf play];
-                        }
-                    }
-                }];
-            }
-        }];
+    // 投屏不做处理
+    if (self.tvControllView.hidden == NO) {
+        return;
     }
-    else // 不使用p2p的情况
-    {
-        // 投屏不做处理
-        if (self.tvControllView.hidden == NO) {
-            return;
-        }
-        //
-        if (self.isManualStopOrPausePlay == YES) {
-            return;
-        }
+    //
+    if (self.isManualStopOrPausePlay == YES) {
+        return;
+    }
 //        if (self.urlPlayer.playerState == HCPlayerViewStatePause || self.urlPlayer.playerState == HCPlayerViewStatePlay) {
-            [self play];
+        [self play];
 //        }
 //        else
 //        {
@@ -3217,7 +3151,6 @@ HCVideoPlayer *g_airPlayVideoPlayer;
 //                }
 //            }];
 //        }
-    }
 }
 
 - (void)didSetTiming:(NSNotification *)notification
@@ -3439,16 +3372,7 @@ HCVideoPlayer *g_airPlayVideoPlayer;
         selectTvDevController.delegate = self;
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:selectTvDevController];
         
-        GCKUICastContainerViewController *castContainerVC;
-        castContainerVC = [[GCKCastContext sharedInstance]
-                           createCastContainerControllerForViewController:nav];
-        castContainerVC.miniMediaControlsItemEnabled = YES;
-        _tvVc.castContainerVC = castContainerVC;
-        
-        UIViewController *vc = castContainerVC;
-        if (vc == nil) {
-            vc = nav;
-        }
+        UIViewController *vc = nav;
         vc.modalPresentationStyle = UIModalPresentationFullScreen;
         [_orVC presentViewController:vc animated:NO completion:^{
         }];
@@ -3776,9 +3700,6 @@ HCVideoPlayer *g_airPlayVideoPlayer;
         case HCTVControllViewStyleGoogleCast:
             type = @"谷歌投屏";
             break;
-        case HCTVControllViewStyleSamsung:
-            type = @"三星投屏";
-            break;
         default:
             break;
     }
@@ -3902,29 +3823,6 @@ HCVideoPlayer *g_airPlayVideoPlayer;
         _tvControllView.loadTime = 0;
         _tvControllView.playTime = 0;
     }
-}
-
-#pragma mark - googleCast 内部方法
-- (void)switchToRemotePlayback {
-    if ([_castUrl isKindOfClass:[NSURL class]] && !_castUrl.absoluteString.length) {
-        [self showMsg:@"播放地址不存在" stopPlay:YES autoHidden:YES];
-        return;
-    }
-    [_urlPlayer stop];
-    self.tvControllView.style = HCTVControllViewStyleGoogleCast;
-    [self showTvControllView];
-    [HCGoogleCastTool startRemotePlaybackWithStreamType:GCKMediaStreamTypeBuffered title:_title description:nil studio:nil photo:_photo urlStr:_castUrl.absoluteString];
-    
-//    [KTHudTool showAlertHudWithText:@"正在投屏中，您可以点击底部栏控制进度条等操作" image:@"alert_success" duration:5 atView:kKeyWindow];
-}
-
-- (void)switchToLocalPlayback {
-    if ([_url isKindOfClass:[NSURL class]] && !_url.absoluteString.length) {
-        [self showMsg:@"播放地址不存在" stopPlay:YES autoHidden:YES];
-        return;
-    }
-    [self playWithUrl:_url];
-    [self hiddenTvControllView];
 }
 @end
 

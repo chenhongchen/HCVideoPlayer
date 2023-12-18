@@ -9,7 +9,6 @@
 #import "HCPlayerView.h"
 #import "HCVideoPlayerConst.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import "HCPTPTool.h"
 #import "HCAirplayCastTool.h"
 #import <CoreTelephony/CTCallCenter.h>
 #import <CoreTelephony/CTCall.h>
@@ -157,11 +156,6 @@ static NSInteger g_PlayerViewAVAudioSessionActiveCount = 0;
         [self releasePlayer];
         
         NSURL *playUrl = _url;
-        _p2pUrl = nil;
-        if ([self isP2pPlay] && ![HCAirplayCastTool isAirPlayOnCast]) {
-            playUrl = [HCPTPTool PTPStreamURLForURL:_url];
-            _p2pUrl = playUrl;
-        }
         
         _player = [AVPlayer playerWithURL:playUrl];
         _player.allowsExternalPlayback = _allowsExternalPlayback;
@@ -375,14 +369,6 @@ static NSInteger g_PlayerViewAVAudioSessionActiveCount = 0;
 {
     _displayMode = displayMode;
     [self setPlayerLayerFrameWithSize:_vedioSize];
-}
-
-- (BOOL)isP2pPlay
-{
-    if (_isAllowUseP2p && [_url.absoluteString containsString:@"http"] && ![_url.absoluteString containsString:@"localhost:"] && ![_url.absoluteString containsString:@"127.0.0.1"] && kVP_IOS11) {
-        return YES;
-    }
-    return NO;
 }
 
 + (NSInteger)AVAudioSessionActiveCount

@@ -8,17 +8,12 @@
 
 #import "HCSelectTvDevController.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import "HCGoogleCastTool.h"
-#import <SmartView/SmartView.h>
 #import "HCVediosCastManualController.h"
 
-@interface HCSelectTvDevController () <CLUPnPServerDelegate, UITableViewDataSource, UITableViewDelegate, ServiceSearchDelegate>
+@interface HCSelectTvDevController () <CLUPnPServerDelegate, UITableViewDataSource, UITableViewDelegate>
 /// Dlna
 @property (nonatomic, strong) CLUPnPServer *upd;
 @property (nonatomic, strong) NSArray <CLUPnPDevice *> *dlnaDevs;
-/// Samsung
-@property (nonatomic, strong) ServiceSearch *ss;
-@property (nonatomic, strong) NSArray <Service *> *samsungDevs;
 
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIImageView *imageView;
@@ -35,15 +30,6 @@
         _upd.searchTime = 10;
     }
     return _upd;
-}
-
-- (ServiceSearch *)ss
-{
-    if (_ss == nil) {
-        _ss = [Service search];
-        _ss.delegate = self;
-    }
-    return _ss;
 }
 
 - (UITableView *)tableView
@@ -68,10 +54,6 @@
 }
 
 #pragma mark - 初始化
-+ (void)initialize
-{
-    [HCGoogleCastTool initCast];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -149,7 +131,7 @@
     // searchingView
     UIView *searchingView = [[UIView alloc] init];
     searchingView.backgroundColor = [UIColor whiteColor];
-    CGFloat searchViewHeight = (self.dlnaDevs.count + self.samsungDevs.count) ? 0 : 48;
+    CGFloat searchViewHeight = self.dlnaDevs.count ? 0 : 48;
     searchingView.frame = CGRectMake(0, 0, kVP_ScreenWidth, searchViewHeight);
     searchingView.clipsToBounds = YES;
     [tableFooterView addSubview:searchingView];
@@ -233,29 +215,15 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-#pragma mark - googleCast通知
-- (void)setCastControlBarsEnabled:(BOOL)notificationsEnabled {
-    _castContainerVC.miniMediaControlsItemEnabled = notificationsEnabled;
-}
-
-- (BOOL)castControlBarsEnabled {
-    return _castContainerVC.miniMediaControlsItemEnabled;
-}
-
 #pragma mark - UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return _samsungDevs.count;
-    }
-    else {
-        return _dlnaDevs.count;
-    }
+    return _dlnaDevs.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -273,14 +241,8 @@
         [cell.contentView addSubview:hLine];
     }
     
-    if (indexPath.section == 0) {
-        Service *samsungDev = self.samsungDevs[indexPath.row];
-        cell.textLabel.text = samsungDev.name;
-    }
-    else {
-        CLUPnPDevice *dlnaDev = self.dlnaDevs[indexPath.row];
-        cell.textLabel.text = dlnaDev.friendlyName;
-    }
+    CLUPnPDevice *dlnaDev = self.dlnaDevs[indexPath.row];
+    cell.textLabel.text = dlnaDev.friendlyName;
     return cell;
 }
 
@@ -291,18 +253,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (indexPath.section == 0) {
-        Service *samsungDev = self.samsungDevs[indexPath.row];
-        if ([self.delegate respondsToSelector:@selector(selectTvDevController:didSelectSamsungDev:)]) {
-            [self.delegate selectTvDevController:self didSelectSamsungDev:samsungDev];
-        }
-    }
-    else {
-        CLUPnPDevice *device = self.dlnaDevs[indexPath.row];
-        if ([self.delegate respondsToSelector:@selector(selectTvDevController:didSelectDlnaDev:)]) {
-            [self.delegate selectTvDevController:self didSelectDlnaDev:device];
-        }
+    CLUPnPDevice *device = self.dlnaDevs[indexPath.row];
+    if ([self.delegate respondsToSelector:@selector(selectTvDevController:didSelectDlnaDev:)]) {
+        [self.delegate selectTvDevController:self didSelectDlnaDev:device];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -323,56 +276,15 @@
     VPLog(@"error==%@", error);
 }
 
-
-#pragma mark - ServiceSearchDelegate
-- (void)onServiceFound:(Service * __nonnull)service
-{
-    _samsungDevs = [_ss getServices];
-    // 去重：主要是dlna中包含三星设备，要去掉
-    [self duplicateDevsRemoval];
-    [self.tableView reloadData];
-    [self setupTableFooterView];
-}
-
-/// The ServiceSearch will call this delegate method when a service is lost
-///
-/// \param service The lost service
-- (void)onServiceLost:(Service * __nonnull)service
-{
-    _samsungDevs = [_ss getServices];
-    [self.tableView reloadData];
-}
-
-/// If BLE device is found
-- (void)onFoundOnlyBLE:(NSString * _Nonnull)NameOfTV
-{
-}
-
-/// Find other network (other than BLE)
-- (void)onFoundOtherNetwork:(NSString * _Nonnull)NameOfTV
-{
-}
-
-/// The ServiceSearch will call this delegate method after stopping the search
-- (void)onStop
-{
-}
-
-/// The ServiceSearch will call this delegate method after the search has started
-- (void)onStart{
-}
-
 #pragma mark - 内部方法
 - (void)startAll
 {
     [self.upd start];
-    [self.ss start];
 }
 
 - (void)stopAll
 {
     [self.upd stop];
-    [self.ss stop];
 }
 
 /// 为导航栏添加google投屏和AirPlay投屏按钮
@@ -390,31 +302,10 @@
     [volume setRouteButtonImage:airPlayImageSel forState:UIControlStateHighlighted];
     UIBarButtonItem *airPlayCastItem = [[UIBarButtonItem alloc] initWithCustomView:volume];
     
-    if (kVP_IOS9 && [GCKCastContext isSharedInstanceInitialized]) { // iOS9 及以上才兼容，且初始化
-        // 添加google投屏 按钮
-        GCKUICastButton *googleCastButton = [[GCKUICastButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-        googleCastButton.tintColor = kVP_TextBlackColor;
-        UIBarButtonItem *googleCastItem = [[UIBarButtonItem alloc] initWithCustomView:googleCastButton];
-        
-        self.navigationItem.rightBarButtonItems = @[airPlayCastItem, googleCastItem];
-    }
-    else
-    {
-        self.navigationItem.rightBarButtonItems = @[airPlayCastItem];
-    }
+    self.navigationItem.rightBarButtonItems = @[airPlayCastItem];
 }
 
 - (void)duplicateDevsRemoval
 {
-    NSMutableArray *dlnaDevsM = [NSMutableArray arrayWithArray:_dlnaDevs];
-    for (CLUPnPDevice *dlnaDev in _dlnaDevs) {
-        for (Service *samsumDev in _samsungDevs) {
-            if ([samsumDev.name isEqualToString:dlnaDev.friendlyName]) {
-                [dlnaDevsM removeObject:dlnaDev];
-                break;
-            }
-        }
-    }
-    _dlnaDevs = dlnaDevsM;
 }
 @end

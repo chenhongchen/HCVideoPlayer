@@ -10,7 +10,6 @@ typedef enum {
     HCTVControllViewStyleDlna,
     HCTVControllViewStyleAirPlay,
     HCTVControllViewStyleGoogleCast,
-    HCTVControllViewStyleSamsung
 }HCTVControllViewStyle;
 
 #import <UIKit/UIKit.h>

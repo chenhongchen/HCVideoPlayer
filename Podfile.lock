@@ -1,46 +1,29 @@
 PODS:
   - CocoaAsyncSocket (7.6.5)
   - FLAnimatedImage (1.0.16)
-  - google-cast-sdk (4.4.8):
-    - google-cast-sdk/Core (= 4.4.8)
-    - GTMSessionFetcher/Core (~> 1.1)
-    - Protobuf (~> 3.0)
-  - google-cast-sdk/Core (4.4.8):
-    - GTMSessionFetcher/Core (~> 1.1)
-    - Protobuf (~> 3.0)
-  - GTMSessionFetcher/Core (1.6.1)
   - HCVideoPlayer (0.0.4):
     - CocoaAsyncSocket
     - FLAnimatedImage
-    - google-cast-sdk (~> 4.4.6)
     - HCVideoPlayer/no-arc (= 0.0.4)
     - HCVideoPlayerTools (= 0.0.5)
     - MJExtension
-    - Peer5Kit (= 1.3.6)
     - Reachability
     - SDWebImage
-    - smart-view-sdk (= 2.5.8)
     - XCDYouTubeKit (= 2.8.2)
   - HCVideoPlayer/no-arc (0.0.4):
     - CocoaAsyncSocket
     - FLAnimatedImage
-    - google-cast-sdk (~> 4.4.6)
     - HCVideoPlayerTools (= 0.0.5)
     - MJExtension
-    - Peer5Kit (= 1.3.6)
     - Reachability
     - SDWebImage
-    - smart-view-sdk (= 2.5.8)
     - XCDYouTubeKit (= 2.8.2)
   - HCVideoPlayerTools (0.0.5)
   - MJExtension (3.3.0)
-  - Peer5Kit (1.3.6)
-  - Protobuf (3.17.0)
   - Reachability (3.2)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
-  - smart-view-sdk (2.5.8)
   - XCDYouTubeKit (2.8.2)
 
 DEPENDENCIES:
@@ -50,15 +33,10 @@ SPEC REPOS:
   trunk:
     - CocoaAsyncSocket
     - FLAnimatedImage
-    - google-cast-sdk
-    - GTMSessionFetcher
     - HCVideoPlayerTools
     - MJExtension
-    - Peer5Kit
-    - Protobuf
     - Reachability
     - SDWebImage
-    - smart-view-sdk
     - XCDYouTubeKit
 
 EXTERNAL SOURCES:
@@ -68,18 +46,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
-  google-cast-sdk: 2feec01ef5ee467f70a14acde9f01f188aeea76f
-  GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
-  HCVideoPlayer: 3fc667ce7de4576f21a139db63b9b4ec7b159481
+  HCVideoPlayer: 2678fe3319bc7859126359d58420bab9e6750b03
   HCVideoPlayerTools: a7ef7b0dc3deec99d288ff2865b8fd3b65bcf2ed
   MJExtension: 01704cca2b60a214c10761b6491eab74069d68a9
-  Peer5Kit: 3ef805c94a615daae0eabca0b2fa01445f6eb7ca
-  Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  smart-view-sdk: 00d57e3720f261560672c57a4aed43368abc74b1
   XCDYouTubeKit: 79baadb0560673a67c771eba45f83e353fd12c1f
 
 PODFILE CHECKSUM: 31c091eafd98fcf0cc1d90a015e847dc922a4f46
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.14.2
