@@ -7,7 +7,7 @@ Pod::Spec.new do |spec|
   spec.license      = "MIT"
   spec.author             = { "chenhongchen666" => "412130100@qq.com" }
   spec.platform     = :ios, "9.0"
-  spec.source       = { :git => "https://github.com/chenhongchen/HCVideoPlayer.git", :tag => "#{spec.version}" }
+  spec.source       = { :https => "https://github.com/chenhongchen/HCVideoPlayer.git", :tag => "#{spec.version}" }
   
   spec.source_files  = "HCVideoPlayer/**/*.{h,m}"
   spec.public_header_files = 'HCVideoPlayer/**/*.h'
