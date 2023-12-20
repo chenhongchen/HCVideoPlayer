@@ -62,7 +62,6 @@ typedef enum {
 @property (nonatomic, weak) id <HCPlayerViewDelegate> delegate;
 
 @property (nonatomic, strong, readonly) NSURL *url;
-@property (nonatomic, strong, readonly) NSURL *p2pUrl;
 
 @property (nonatomic, assign, readonly) NSTimeInterval currentTime;
 @property (nonatomic, assign, readonly) NSTimeInterval totalTime;

@@ -25,7 +25,6 @@
 #import "UIViewController+VP.h"
 #import "HCGoogleCastTool.h"
 #import "HCAirplayCastTool.h"
-#import "HCPTPTool.h"
 #import "BrightnessView.h"
 #import "HCFastForwardAndBackView.h"
 #import "HCTimingView.h"
@@ -3170,43 +3169,16 @@ HCVideoPlayer *g_airPlayVideoPlayer;
         return;
     }
     
-    NSURL *p2pUrl = [HCPTPTool PTPStreamURLForURL:_url];
-    BOOL isSamePTPUrl = [_urlPlayer.p2pUrl.absoluteString.lowercaseString isEqualToString:p2pUrl.absoluteString.lowercaseString];
-    
-    __weak typeof(self) weakSelf = self;
-    if (_urlPlayer.p2pUrl && !isSamePTPUrl) { // 使用p2p，但p2p url 已变的情况
-        if (self.tvControllView.hidden == NO && self.tvControllView.style == HCTVControllViewStyleAirPlay) {
-            return;
-        }
-        [self playWithUrl:_url forceReload:YES readyComplete:^(HCVideoPlayer *videoPlayer, HCVideoPlayerStatus status) {
-            if (status == HCVideoPlayerStatusReadyed) {
-                [weakSelf seekToTime:weakSelf.progressView.lastPlayTime autoPlay:NO complete:^(BOOL finished) {
-                    if (finished) {
-                        // 正在投屏或是之前是手动暂停的，暂停播放
-                        if (weakSelf.tvControllView.hidden == NO || weakSelf.isManualStopOrPausePlay) {
-                            [weakSelf pause];
-                        }
-                        else
-                        {
-                            [weakSelf play];
-                        }
-                    }
-                }];
-            }
-        }];
-    }
-    else // 不使用p2p的情况
-    {
         // 投屏不做处理
-        if (self.tvControllView.hidden == NO) {
-            return;
-        }
-        //
-        if (self.isManualStopOrPausePlay == YES) {
-            return;
-        }
+    if (self.tvControllView.hidden == NO) {
+        return;
+    }
+    //
+    if (self.isManualStopOrPausePlay == YES) {
+        return;
+    }
 //        if (self.urlPlayer.playerState == HCPlayerViewStatePause || self.urlPlayer.playerState == HCPlayerViewStatePlay) {
-            [self play];
+    [self play];
 //        }
 //        else
 //        {
@@ -3217,7 +3189,6 @@ HCVideoPlayer *g_airPlayVideoPlayer;
 //                }
 //            }];
 //        }
-    }
 }
 
 - (void)didSetTiming:(NSNotification *)notification

@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "HCVideoPlayer"
-  spec.version      = "0.0.4"
+  spec.version      = "0.0.6"
   spec.summary      = "iOS播放器"
   spec.description  = "支持各种投屏、贴片等各种广告、弹幕等，功能全面"
   spec.homepage     = "https://github.com/chenhongchen/HCVideoPlayer"
@@ -17,12 +17,14 @@ Pod::Spec.new do |spec|
   spec.dependency 'SDWebImage'
   spec.dependency 'FLAnimatedImage'
   spec.dependency 'Reachability'
-  spec.dependency 'Peer5Kit', '1.3.6'
+  # spec.dependency 'Peer5Kit', '1.3.6'
   spec.dependency 'google-cast-sdk', '~> 4.4.6'
-  spec.dependency 'smart-view-sdk', '2.5.8'
+  # spec.dependency 'smart-view-sdk', '2.5.8'
   spec.dependency 'XCDYouTubeKit', '2.8.2'
   spec.dependency 'HCVideoPlayerTools', '0.0.5'
   spec.dependency 'CocoaAsyncSocket'
+
+  spec.vendored_frameworks = "HCVideoPlayer/frameworks/**/*.framework"
   
   #引入xml2
   spec.libraries = 'icucore', 'c++', 'z', 'xml2'

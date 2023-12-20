@@ -44,7 +44,7 @@
     [super viewDidLoad];
     self.videoPlayer.frame = self.contentView.bounds;
     
-    NSString *url = @"https://hls.cntv.baishancdnx.cn/asp/hls/main/0303000a/3/default/e2579451cd694bdf8a6c19b860ece19e/main.m3u8";
+    NSString *url = @"https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8";
     [self.videoPlayer playWithUrl:[NSURL URLWithString:url] readyComplete:^(HCVideoPlayer *videoPlayer, HCVideoPlayerStatus status) {
         [videoPlayer resume];
     }];
